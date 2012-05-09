@@ -35,14 +35,14 @@ class SimpleDiff {
 		}
 		if($maxlen == 0) return array(array('d'=>$old, 'i'=>$new));
 		return array_merge(
-			diff(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
+			$this->diff(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
 			array_slice($new, $nmax, $maxlen),
-			diff(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen)));
+			$this->diff(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen)));
 	}
 
 	public static function htmlDiff($old, $new){
 		$ret = '';
-		$diff = diff(explode(' ', $old), explode(' ', $new));
+		$diff = $this->diff(explode(' ', $old), explode(' ', $new));
 		foreach($diff as $k){
 			if(is_array($k))
 				$ret .= (!empty($k['d'])?"<del>".implode(' ',$k['d'])."</del> ":'').
